@@ -6,7 +6,7 @@ from db import DBManagement as db
 class Common:
 
     @staticmethod
-    def last_url(total_product):  # end_of_url
+    def last_url(total_product):
         """this function helps to get end of urls.
         for ex: https://rugs.rugstudio.com/newnav/96 ; 96 is returned by this function.
         """
@@ -53,6 +53,10 @@ class Common:
 
     @staticmethod
     def design_id_pattern_i(title):
+        """
+        Rugs have some patterns from designID. In Rugstudio, there are two patterns. In this pattern, designID has the
+        digital number in its pattern.
+        """
         title_separate = title.split(" ")
         for character in title_separate:
             if re.findall('[0-9]', character):
@@ -61,6 +65,10 @@ class Common:
 
     @staticmethod
     def design_id_pattern_ii(title: str, brand: str, collection_name: str):
+        """
+        Rugs have some patterns from designID. In Rugstudio, there are two patterns. In this pattern, designID is a
+        word. The location of this word is different in the brands title.
+        """
         title_ = title.lower().split(' ')
         print(f'title: {title_}')
         brand_ = brand.lower().split(' ')
@@ -84,6 +92,9 @@ class Common:
 
     @staticmethod
     def max_worker():
+        """
+        Fetch max worker from database
+        """
         max_worker = db.fetch_datas(db_file=db.db_file(), table_name=db.db_table()[4], all_columns=False,
                                     columns=['seq'], condition="name='max_worker'")
         max_worker = int(max_worker[0][0])
