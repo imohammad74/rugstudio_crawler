@@ -58,7 +58,6 @@ class Main:
     def __init__(self):
         while True:
             print('''
-            Welcome to Rugstudio Crawler. Please enter an option:
             [1]: Get All URLs
             [2]: Get Some Brand URLs
             [3]: Get PDPs
