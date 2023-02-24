@@ -76,9 +76,11 @@ class CheckPrice:
 
     def __init__(self):
         max_worker = Common.max_worker()
-        # for first
-        # db.copy_column(db_file=db.db_file(), table_name=db.db_table()[5],
-        #               columns=['new_price', 'last_price'])
+        """
+        for first time, this command be uncommented.
+        db.copy_column(db_file=db.db_file(), table_name=db.db_table()[5],
+                       columns=['new_price', 'last_price'])
+        """
         urls = db.fetch_datas(db_file=db.db_file(), table_name=db.db_table()[0], all_columns=False,
                               columns=['brand', 'url_address'])
         urls_ = []
