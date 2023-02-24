@@ -5,12 +5,12 @@ import requests
 from bs4 import BeautifulSoup
 from xlsxwriter.workbook import Workbook
 
-from woker import Worker
 from common import Common
 from db import DBManagement as db
 from mail import Mail
 from pdp_elements import PDPElements
 from table import Table
+from woker import Worker
 
 now = datetime.now()
 
@@ -72,9 +72,6 @@ class CheckPrice:
             except:
                 db.update_rows(db_file=db.db_file(), table_name=db.db_table()[5], condition=f'item_id="{item_id}"',
                                columns=all_columns)
-
-        # todo:collect the is_warning record and export them to the excel file
-        # todo: send a email with excel attachment to receiver/s
 
     def __init__(self):
         max_worker = Common.max_worker()
