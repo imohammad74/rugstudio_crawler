@@ -45,7 +45,6 @@ class CheckPrice:
         workbook.close()
         print('execl file is created')
         Mail(attachment=True)
-        # test
 
     @staticmethod
     def main(params):
