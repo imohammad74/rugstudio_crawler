@@ -16,6 +16,7 @@ now = datetime.now()
 
 
 class CheckPrice:
+    print('Checking price start...')
 
     @staticmethod
     def check_prices():
