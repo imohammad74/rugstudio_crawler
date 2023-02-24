@@ -32,7 +32,6 @@ class Mail:
             body = f"Start crawling progress at: {send_time}"
             msg.attach(MIMEText(body, 'plain'))
             p = MIMEBase('application', 'octet-stream')
-            # p.add_header('Content-Disposition')
         msg.attach(p)
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.starttls()
