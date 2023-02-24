@@ -8,9 +8,9 @@ from email.mime.text import MIMEText
 
 
 class Mail:
-    fromaddr = "rugsluxe1@gmail.com"
-    password = "fdidyiaubsdkabdw"
-    toaddr = "razmara.smr@gmail.com"
+    fromaddr = ""
+    password = ""
+    toaddr = ""
 
     def main(self, attachment: bool, **kwargs):
         msg = MIMEMultipart()
