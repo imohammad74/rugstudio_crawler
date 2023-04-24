@@ -6,12 +6,12 @@ class DBManagement:
 
     @staticmethod
     def db_file():
-        db_file = 'database.db'
+        db_file = 'rugs_database.db'
         return db_file
 
     @staticmethod
     def db_table():
-        db_table = ['rugstudio_url', 'brands', 'pdp', 'no_data', 'sqlite_sequence', 'check_prices']
+        db_table = ['rugstudio_url', 'brands', 'pdp', 'no_data', 'sqlite_sequence', 'check_prices', 'design_id']
         return db_table
 
     @staticmethod

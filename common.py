@@ -99,3 +99,9 @@ class Common:
                                     columns=['seq'], condition="name='max_worker'")
         max_worker = int(max_worker[0][0])
         return max_worker
+
+    @staticmethod
+    def find_brand(url: str, brands: list) -> str:
+        for brand in brands:
+            if brand in url:
+                return brand

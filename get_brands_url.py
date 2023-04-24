@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from common import Common
 from db import DBManagement as db
 from get_all_brands_url import GetAllBrandsURL
-from woker import Worker
+from worker import Worker
 
 
 class GetBrandsURL:
@@ -16,6 +16,7 @@ class GetBrandsURL:
         re = requests.get(url)
         soup = BeautifulSoup(re.content, "html.parser")
         params = {
+            'brands_list': brand['brands_list'],
             'brand': brand["brand"],
             'url': url,
             're': re,
@@ -26,9 +27,11 @@ class GetBrandsURL:
     def __init__(self):
         max_worker = Common.max_worker()
         brands_url = db.fetch_datas(db_file=db.db_file(), table_name=db.db_table()[1], all_columns=True)
-        brands = []
+        brands_list = [brand[1].lower().replace(' ', '-') for brand in brands_url]
+        print(brands_list)
+        params = []
         for i in range(len(brands_url)):
-            brand = {'brand': brands_url[i][1], 'url_address': brands_url[i][2]}
-            brands.append(brand)
-        Worker(fn=self.main, data=brands, max_worker=max_worker)
+            param = {'brand': brands_url[i][1], 'url_address': brands_url[i][2], 'brands_list': brands_list}
+            params.append(param)
+        Worker(fn=self.main, data=params, max_worker=max_worker)
         # self.main()

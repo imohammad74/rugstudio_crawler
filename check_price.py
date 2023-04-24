@@ -10,7 +10,7 @@ from db import DBManagement as db
 from mail import Mail
 from pdp_elements import PDPElements
 from table import Table
-from woker import Worker
+from worker import Worker
 
 now = datetime.now()
 
@@ -76,8 +76,8 @@ class CheckPrice:
 
     def __init__(self):
         max_worker = Common.max_worker()
-        """
-        for first time, this command be uncommented.
+
+        # for first time, this command be uncommented.
         db.copy_column(db_file=db.db_file(), table_name=db.db_table()[5],
                        columns=['new_price', 'last_price'])
         """
@@ -91,3 +91,4 @@ class CheckPrice:
             }
             urls_.append(product)
         Worker(self.main, data=urls_, max_worker=max_worker)
+        """

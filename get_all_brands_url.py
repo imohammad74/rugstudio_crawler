@@ -2,7 +2,6 @@ from datetime import datetime
 
 import requests
 from bs4 import BeautifulSoup
-
 from common import Common
 from db import DBManagement as db
 
@@ -14,8 +13,9 @@ class GetAllBrandsURL:
     @staticmethod
     def main(params):
         """This function is main function in this script and get urls and insert them to database."""
-        brand = params['brand']
+        # brand = params['brand']
         main_url = params['url']
+        brands_list = params['brands_list']
         number_of_product = Common.number_of_product(params['soup'])
         url_list = Common.last_url(number_of_product)
         for url in url_list:
@@ -31,6 +31,7 @@ class GetAllBrandsURL:
                 ss = BeautifulSoup(str(pdp_url), "html.parser")
                 el = ss.find(class_='h5 color-inherit', href=True)
                 clean_url = Common.get_url(el['href'])
+                brand = Common.find_brand(clean_url, brands_list)
                 db.insert_rows(db_file=db.db_file(), table_name=db.db_table()[0], log=False, columns=[
                     {
                         'column': 'url_address',

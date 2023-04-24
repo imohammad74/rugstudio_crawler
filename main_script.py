@@ -1,13 +1,12 @@
 import requests
 from bs4 import BeautifulSoup
-from mail import Mail
+from worker import Worker
 from check_price import CheckPrice
 from common import Common
 from db import DBManagement as db
 from get_all_brands_url import GetAllBrandsURL
 from get_brands_url import GetBrandsURL
 from pdp import PDP
-from woker import Worker
 
 
 class Main:
@@ -49,9 +48,37 @@ class Main:
                                condition="name='rugstudio_url'")
         else:
             urls = db.fetch_datas(db_file=db.db_file(), table_name=db.db_table()[0], all_columns=False,
-                                  columns=['url_address'])
-            urls_ = [url[0] for url in urls]
-            Worker(fn=PDP, data=urls_, max_worker=max_worker)
+                                  columns=['url_address', 'brand'])
+            brands_design_ids = db.fetch_datas(db_file=db.db_file(), table_name=db.db_table()[6], all_columns=True)
+            brands_design_ids_count = len(brands_design_ids)
+            brands = db.fetch_datas(db_file=db.db_file(), table_name=db.db_table()[1], all_columns=False,
+                                    columns=['brand_name'])
+            brands_list = [brand[0].lower().replace(' ', '-') for brand in brands]
+            design_id_list = []
+            for brand in brands:
+                brand = brand[0].lower()
+                design_ids = []
+                for i in range(brands_design_ids_count):
+                    if brand == brands_design_ids[i][0].lower():
+                        design_id = brands_design_ids[i][1].lower().replace(' ', '-')
+                        design_ids.append(design_id)
+                params = {'brand': brand, 'brands_list': brands_list, 'design_ids': design_ids}
+                design_id_list.append(params)
+            design_id_list_count = len(design_id_list)
+            params_list = []
+            for url_address in urls:
+                url = url_address[0]
+                brand_ = url_address[1].lower()
+                print(brand_)
+                for i in range(design_id_list_count):
+                    if brand_ == design_id_list[i]['brand']:
+                        params = {'url': url, **design_id_list[i]}
+                        params_list.append(params)
+
+            Worker(fn=PDP, data=params_list, max_worker=max_worker)
+
+            # urls_ = [url[0] for url in urls]
+            # Worker(fn=PDP, data=urls_, max_worker=max_worker)
             # for url in urls:
             #   PDP(url[0])
 
@@ -70,13 +97,13 @@ class Main:
             elif select_option == '2':
                 self.get_urls(all_brand=False)
             elif select_option == '3':
-                Mail(attachment=False)
+                # Mail(attachment=False)
                 self.get_pdp(resume=False)
             elif select_option == '4':
-                Mail(attachment=False)
+                # Mail(attachment=False)
                 self.get_pdp(resume=True)
             elif select_option == '5':
-                Mail(attachment=True)
+                # Mail(attachment=True)
                 CheckPrice()
             else:
                 continue

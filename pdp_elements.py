@@ -123,15 +123,11 @@ class PDPElements:
         else:
             return image_links
 
-    def design_id(self, soup, pattern_id: str):
-        title = self.title(soup)
-        collection_name = self.features(soup)['Collection']
-        if pattern_id == '1':
-            Common.design_id_pattern_i(title)
-        elif pattern_id == '2':
-            Common.design_id_pattern_ii(title=title, brand=title.split(' ')[0], collection_name=collection_name)
-        else:
-            return 'Not found'
+    def design_id(self, soup, design_ids: list) -> str:
+        title = self.title(soup).lower().replace(' ', '-')
+        for design_id in design_ids:
+            if design_id in title:
+                return design_id
+        return ''
 
 
-# todo:design id
