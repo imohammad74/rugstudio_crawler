@@ -11,7 +11,8 @@ class DBManagement:
 
     @staticmethod
     def db_table():
-        db_table = ['rugstudio_url', 'brands', 'pdp', 'no_data', 'sqlite_sequence', 'check_prices', 'design_id']
+        db_table = ['rugstudio_url', 'brands', 'pdp', 'no_data', 'sqlite_sequence', 'CheckPrices', 'design_id',
+                    'Source']
         return db_table
 
     @staticmethod
@@ -250,7 +251,7 @@ class DBManagement:
                 conn.close()
 
     @staticmethod
-    def custom_query(db_file: str, query: str):
+    def custom_query(db_file: str, query: str) -> object:
         """Copy a column to another that
         example: custom_query(db_file= db.db_file, query="SELECT last_price, new_price,
         (CASE WHEN (new_price-last_price)=0 THEN NULL ELSE 0 END) as 'is_warning' FROM check_prices;"

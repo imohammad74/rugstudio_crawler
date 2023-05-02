@@ -105,3 +105,18 @@ class Common:
         for brand in brands:
             if brand in url:
                 return brand
+
+    @staticmethod
+    def find_size(size_string: str) -> str:
+        string_ = size_string.split(' ')
+        pattern = re.compile(r'^[a-wyzA-WYZ]+$')
+        size = []
+        for item in string_:
+            if not pattern.match(item):
+                size.append(item)
+        seperator = ' '
+        size = seperator.join(size)
+        size = size.replace(" ", "")
+        size = size.replace("'", "-")
+        size = size.replace('"', "+")
+        return size

@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from worker import Worker
+
 from check_price import CheckPrice
 from common import Common
 from db import DBManagement as db
@@ -69,13 +69,14 @@ class Main:
             for url_address in urls:
                 url = url_address[0]
                 brand_ = url_address[1].lower()
-                print(brand_)
                 for i in range(design_id_list_count):
                     if brand_ == design_id_list[i]['brand']:
                         params = {'url': url, **design_id_list[i]}
                         params_list.append(params)
-
-            Worker(fn=PDP, data=params_list, max_worker=max_worker)
+            with open('collection-test.txt', 'a+') as f:
+                f.write(str(params_list))
+                f.close()
+            # Worker(fn=PDP, data=params_list, max_worker=max_worker)
 
             # urls_ = [url[0] for url in urls]
             # Worker(fn=PDP, data=urls_, max_worker=max_worker)
